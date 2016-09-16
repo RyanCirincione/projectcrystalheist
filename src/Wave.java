@@ -26,6 +26,11 @@ public class Wave
 		bullets.put(t, new ArrayList<Bullet>(Arrays.asList(b)));
 	}
 	
+	public ArrayList<Bullet> get(int t)
+	{
+		return bullets.get(t);
+	}
+	
 	public ArrayList<Bullet> tick()
 	{
 		time++;
@@ -64,7 +69,7 @@ public class Wave
 	public static Wave stripe_move_right_wave()
 	{
 		Wave wave = new Wave();
-		final int WIDTH = 70;
+		final int WIDTH = 85;
 		for(int i = -7; i < Game.S_WIDTH/WIDTH; i++)
 		{
 			Bullet b = new Bullet(i%2==0, new Rectangle(i*WIDTH, -Game.S_HEIGHT, WIDTH, Game.S_HEIGHT),
@@ -77,6 +82,44 @@ public class Wave
 				}
 			};
 			wave.put(i+5, b);
+		}
+		wave.put(550);
+		
+		return wave;
+	}
+	
+	public static Wave stripe_move_together_wave()
+	{
+		Wave wave = new Wave();
+		final int WIDTH = 85;
+		for(int i = -7; i < Game.S_WIDTH/WIDTH; i+=2)
+		{
+			Bullet b = new Bullet(true, new Rectangle(i*WIDTH, -Game.S_HEIGHT, WIDTH, Game.S_HEIGHT),
+					500){
+				public void tick(){
+					if(((Rectangle)shape).y < 0)
+						((Rectangle)shape).y+=5;
+					else
+						((Rectangle)shape).x++;
+				}
+			};
+			wave.put(i+5, b);
+		}
+		for(int i = -1; i < Game.S_WIDTH/WIDTH+5; i+=2)
+		{
+			Bullet b = new Bullet(false, new Rectangle(i*WIDTH, -Game.S_HEIGHT, WIDTH, Game.S_HEIGHT),
+					500){
+				public void tick(){
+					if(((Rectangle)shape).y < 0)
+						((Rectangle)shape).y+=5;
+					else
+						((Rectangle)shape).x--;
+				}
+			};
+			if(wave.get(i+5) != null)
+				wave.get(i+5).add(b);
+			else
+				wave.put(i+5, b);
 		}
 		wave.put(550);
 		

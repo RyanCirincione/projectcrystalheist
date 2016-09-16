@@ -236,7 +236,7 @@ public class Game extends JPanel
 		}
 		//TODO Remove temp system of spawning new waves
 		if(currentWaves.size() == 0)
-			switch((int)(Math.random()*3)){
+			switch((int)(Math.random()*4)){
 			case 0:
 				currentWaves.add(Wave.flowey_circle_wave());
 				break;
@@ -245,6 +245,9 @@ public class Game extends JPanel
 				break;
 			case 2:
 				currentWaves.add(Wave.random_grow_circles_wave());
+				break;
+			case 3:
+				currentWaves.add(Wave.stripe_move_together_wave());
 				break;
 			}
 		
